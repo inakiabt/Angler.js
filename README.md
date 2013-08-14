@@ -2,6 +2,8 @@
 
 Angler.js is tool for advanced event and session tracking. See a working example at www.sdrobs.com/home/angler
 
+The above example shows a very simple data rendering with time graphs, predicted users actions, and event statistics. Angler data can easily be rendered to show much more powerful renderings though, such as heatmaps, user reenactment, and A-B testing overlays.
+
 ###Client Side:
 
     <script src="../angler.js"></script>
@@ -77,8 +79,6 @@ One 'anglerSession' is created for each visit to a url, and resets every time th
 Angler is best suited for websites using client-side rendering engines such as backbone or ember, because it allows angler to save data on a detected url change. If you are simply serving static pages, it is highly recommended that you set 'heartBeat' on start to a low value (~3000 ms or so) to avoid losing data.
 
 To clarify, the heartBeat controls both saving, and inactivity dormancy. As long as any activity is detected between consecutive heartbeats, angler will save its current data on this interval. If no activity was recorded since the last heartbeat, angler will go into a waiting state, where it stops storing data until further activity resumes. On activity resume, a new set of start and end timestamps will be appended to the current event context, essentially marking the specific periods of user activity.
-
-What you choose to do with data manipulation and representation is entirely up to you. Possibilities include page heatmaps, time charts, overall statistics, and more.
 
 Feel free to contact me if you have any questions.
 
