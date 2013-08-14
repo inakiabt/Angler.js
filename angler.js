@@ -23,6 +23,14 @@
         atomic = true, //prevents multiple pathChecks returning true before path has been updated
         heartBeat
 
+    //ie8 support
+    if (typeof console === 'undefined' || typeof console.log === 'undefined') {
+        console = {}
+        console.log = function(msg){
+            angler.errorLog.push(msg)
+        }
+    }
+
     var heartMonitor = function(){
 
         if(!active){
