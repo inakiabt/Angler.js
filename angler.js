@@ -215,6 +215,24 @@
 
     angler.start = start
 
+    var _getInfo = function(name){
+        var context = {
+            active : active,
+            sessionId : sessionId,
+            events : events,
+            timeStampStart : timeStampStart,
+            timeStampEnd : timeStampEnd,
+            path : path,
+            activeTimer : activeTimer,
+            lastHook : lastHook,
+            lastSave : lastSave
+        }
+
+        return context[name]
+    }
+
+    angler._getInfo = _getInfo
+
     //Hook setup
     var startHooks = function(){
         $().ready(function(){
