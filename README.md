@@ -93,6 +93,8 @@ Next, you will need phantomjs, which is a headless browser for simulating a prop
 
 Assuming everything has installed correctly, you can now run ```npm test``` to start the main test file, init.js, which will run all appropriate test files through phantomjs.
 
+***Note that init.js will look for both your copy of angler.js as well as phantomjs in the angler.js root directory.
+
 ======
 
 ### License
