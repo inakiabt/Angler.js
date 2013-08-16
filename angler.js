@@ -9,6 +9,7 @@
     angler.heartBeat = 10000
     angler.isTagOnly = false //will set whether or not angler only records tagged events
     angler.isSaveTagOnly = false
+    angler.postLocation = '/angle/'
 
     var active,
         sessionId,
@@ -66,7 +67,7 @@
         
         $.ajax({
             type: 'POST',
-            url: '/angle/'+sessionId,
+            url: angler.postLocation+sessionId,
             timeout: 750, //this should not be changed!
             data: data,
             dataType: 'json',
