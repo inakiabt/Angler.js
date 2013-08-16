@@ -1,6 +1,6 @@
 {
   "name": "Angler.js",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "Angler.js is tool for advanced event and session tracking. See a working example at www.sdrobs.com/home/angler",
   "main": "angler.js",
   "scripts": {

@@ -25,6 +25,10 @@ Note that Angler.js does require Jquery to run properly.
 =======
 ###Server Side:
 
+Angler will by default post all data to '/angle/:anglerId', so you will need to set up a route to receive and save angler data to your database.
+You can pass { postLocation : 'postpath' } as a start config if you are not posting to the server running your page.
+
+
 As of right now, angler does not sync client-side timezones/offsets. This is because there is no guarantee that a user's computer is correctly synced to its set timezone, and such inaccuracy could malform your data.
 
 As such, it is STRONGLY recommended that you sync all incoming timestamps to your server's time. Syncing is simple; the following is a node.js (javascript) example of how to sync all incoming times:
@@ -45,9 +49,6 @@ As such, it is STRONGLY recommended that you sync all incoming timestamps to you
         })
     }
     //and that's it! Super simple.
-
-Angler posts all data to '/angle/:anglerId', so you will need to set up a route to receive and save angler data to your database. 
-Once it is saved, you can manipulate angler data however you want!
  
 =======
 
@@ -55,22 +56,22 @@ Once it is saved, you can manipulate angler data however you want!
 
 Angler will post data conforming to the following schema:
 
-    var anglerSession = new Schema({
-        path                        : { type : String, required : true },
-        sessionId                   : { type : String, required : true, index: true },
-        user                        : { type : String }, //optional; can be populated either on client side or server side
-        events: [{
-            nodeName             : { type : String },
-            elementIdName        : { type : String },
-            elementClassName     : { type : String },
-            data                 : { type : String },
-            href                 : { type : String },
+    var anglerSession = {
+        path                 : "string", //the url of the page data is being posted from
+        sessionId            : "string", //the id of the current angler session. This is necessary for updating saved angler data.
+        user                 : "string", //optional; can be populated either on client side or server side
+        events: [{                       //the first event on every page will always be page loaded
+            nodeName             : "string", //type of element clicked on page
+            elementIdName        : "string", //id of element clicked
+            elementClassName     : "string", //class of element clicked
+            data                 : "string", //event name, if specified (pulled from data-angler="Event Name")
+            href                 : "string", //if the element is a link, it will store the href tag
             timeStamps:    [{
-                start : { type : Number },
-                end   : { type : Number }
+                start : int, //these are each unix integers representing a time stamp
+                end   : int
             }]
         }]
-    })
+    }
     
 Essentially, angler records timestamps marking the start and end of each spurt of user activity on a page, while storing it within the context of the associated events. This allows a near perfect modeling of what a user did during any one time on a page.
 
@@ -81,6 +82,19 @@ Angler is best suited for websites using client-side rendering engines such as b
 To clarify, the heartBeat controls both saving, and inactivity dormancy. As long as any activity is detected between consecutive heartbeats, angler will save its current data on this interval. If no activity was recorded since the last heartbeat, angler will go into a waiting state, where it stops storing data until further activity resumes. On activity resume, a new set of start and end timestamps will be appended to the current event context, essentially marking the specific periods of user activity.
 
 Feel free to contact me if you have any questions.
+
+======
+###Testing:
+
+Tests should be run using npm (Node Package Manager)
+
+If you do not already have it, run ```sudo apt-get install nodejs```. After installation, navigate to the main angler.js directory and run ```npm install``` to install all necessary dependencies.
+
+Next, you will need phantomjs, which is a headless browser for simulating a proper test environment. You can find a working binary at phantomjs.org.
+
+Assuming everything has installed correctly, you can now run ```npm test``` to start the main test file, init.js, which will run all appropriate test files through phantomjs.
+
+***Note that init.js will look for both your copy of angler.js as well as phantomjs in the angler.js root directory.
 
 ======
 
